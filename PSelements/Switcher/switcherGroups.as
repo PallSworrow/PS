@@ -20,14 +20,14 @@ package PS.PSelements.Switcher
 			
 		}
 		
-		public static function unselectGroup(group):void
+		public static function unselectGroup(group:String):void
 		{
 			if (allGroups[group])
 			{
 				var gr:Vector.<SwitchButton2> = allGroups[group];
 				for (var i:int = gr.length-1; i >=0; i--)
 				{
-					gr[i].Unselect;
+					gr[i].Unselect();
 					
 				}
 			}

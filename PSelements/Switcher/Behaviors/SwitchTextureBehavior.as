@@ -13,26 +13,27 @@ package PS.PSelements.Switcher.Behaviors
 		protected var switchItem:DisplayObjectContainer;
 		
 		protected var onPressImg:DisplayObject;
+		protected var onActiveImg:DisplayObject;
 		protected var normalImg:DisplayObject;
 		protected var enabled:Boolean = false;
 		protected var active:Boolean = false;
 		
-		public function SwitchTextureBehavior(onActiveImage:DisplayObject) 
+		public function SwitchTextureBehavior(onActiveImage:DisplayObject,onPressImage:DisplayObject) 
 		{
-			
-			onPressImg = onActiveImage;
+			onActiveImg = onActiveImage;
+			onPressImg = onPressImage;
 		}
 		public function init(client:DisplayObjectContainer, nativeTexture:DisplayObject):void
 		{
 			
 			switchItem = client;
 			normalImg = nativeTexture;
-			switchItem.addChild(onPressImg);
+			if(onPressImg) switchItem.addChild(onPressImg);
+			switchItem.addChild(onActiveImg);
 			
 			
-			
-			
-			onPressImg.visible = false;
+			onActiveImg.visible = false;
+			if(onPressImg) onPressImg.visible = false;
 			enabled = true;
 		}
 		
@@ -40,17 +41,19 @@ package PS.PSelements.Switcher.Behaviors
 		{
 			//trace('select');
 			if (!enabled) return;
-			onPressImg.visible = true;
+			if(onPressImg) onPressImg.visible = false;
+			onActiveImg.visible = true;
 			normalImg.visible = false;
-			active = false;
+			active = true;
 			
 		}
 		public function unselect():void
 		{
 			//trace('unselect');
 			if (!enabled) return;
-			onPressImg.visible = false;
+			if(onPressImg) onPressImg.visible = false;
 			normalImg.visible = true;
+			onActiveImg.visible = false;
 			active = false;
 		}
 		public function onPress():void
@@ -58,8 +61,9 @@ package PS.PSelements.Switcher.Behaviors
 			//trace('press');
 			if (!enabled) return;
 			
-			/*onPressImg.visible = true;
-			normalImg.visible = false;*/
+			if(onPressImg) onPressImg.visible = true;
+			normalImg.visible = false;
+			onActiveImg.visible = false;
 			
 		}
 		public function onRelease():void

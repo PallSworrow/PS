@@ -17,7 +17,7 @@ package PS.PSelements
 	public class SwitchButton2 extends Sprite 
 	{
 		//MAIN FLAGS:
-		public var clickable:Boolean = true;
+		private var _clickable:Boolean;
 		private var _active:Boolean = false;
 		
 		//ENGINE:
@@ -30,25 +30,25 @@ package PS.PSelements
 		public function SwitchButton2(obj:DisplayObject,addToGroup:String) 
 		{
 			super();
+			texture = obj;
+			addChild(texture);
+			clickable = true;
 			group = addToGroup;
 			switcherGroups.addToGroup(this, group);
 			
 			
-			ctrl = Controller.addTapListener(this);
-			ctrl.addEventListener(TapController.ON_PRESS, ctrl_onPress);
-			ctrl.addEventListener(TapController.ON_RELEASE, ctrl_onRelease);
-			ctrl.addEventListener(TapController.ON_TAP, ctrl_onTap);
+			
 		}
 		
 		
-		//PUBLIC METHODS:
+		//PUBLIC METHODS:----------------------------------------------------------------------
 			//main:
-		public function Select():void
+		public function Select(needCallHandler:Boolean = true):void
 		{
-			switcherGroups.unselectGroup(group);
+			switcherGroups.unselectGroup(group);//!
 			if (behavior) behavior.select();
 			
-			
+			if (needCallHandler) callHandler();
 			
 			
 			
@@ -74,43 +74,122 @@ package PS.PSelements
 		
 			//extra:
 		private var secondaryCtrl:Controller;
-		public function addController(trigger:InteractiveObject):void
+		public function addControlTrigger(trigger:InteractiveObject):void
+		{
+			removeControlTrigger();
+			
+			secondaryCtrl = Controller.addTapListener(trigger);
+			secondaryCtrl.addEventListener(TapController.ON_PRESS, ctrl2_onPress);
+			secondaryCtrl.addEventListener(TapController.ON_RELEASE, ctrl2_onRelease);
+			secondaryCtrl.addEventListener(TapController.ON_TAP, ctrl2_onTap);
+		}
+		public function removeControlTrigger():void
 		{
 			if (secondaryCtrl)
 			{
 				secondaryCtrl.enabled = false;
+				secondaryCtrl.removeEventListener(TapController.ON_PRESS, ctrl2_onPress);
+				secondaryCtrl.removeEventListener(TapController.ON_RELEASE, ctrl2_onRelease);
+				secondaryCtrl.removeEventListener(TapController.ON_TAP, ctrl2_onTap);
 			}
-			
-			secondaryCtrl = Controller.addTapListener(trigger
 		}
+		private var handlerFunc:Function;
+		private var handlerParam:Object;
+		private var handlerAdded:Boolean = false;
+		public function addHandler(handler:Function, param:Object):void
+		{
+			handlerAdded = true;
+			handlerFunc = handler;
+			handlerParam = param;
+		}
+		public function removeHandler():void
+		{
+			handlerAdded = false;
+			handlerFunc = null;
+			handlerParam = null;
+		}
+		//====================================================================================
 		
-		
-		//INNER METHODS:
+		//INNER METHODS:--------------------------------------------------------------------------------------
 		private function ctrl_onTap(e:Event):void 
 		{
-			if (clickable)
-			{
-				Select();
-				
-			}
+			if (clickable) Select();
 		}
 		
 		private function ctrl_onRelease(e:Event):void 
 		{
-			
+			if (clickable) Release(); 
 		}
 		
 		private function ctrl_onPress(e:Event):void 
 		{
-			
+			if (clickable) Press(); 
+		}
+		private function ctrl2_onTap(e:Event):void 
+		{
+			Select();
 		}
 		
+		private function ctrl2_onRelease(e:Event):void 
+		{
+			Release(); 
+		}
 		
-		//GETTERS:
+		private function ctrl2_onPress(e:Event):void 
+		{
+			Press(); 
+		}
+		private function enableControl():void
+		{
+			if (!ctrl)
+			{
+				ctrl = Controller.addTapListener(this);
+				ctrl.addEventListener(TapController.ON_PRESS, ctrl_onPress);
+				ctrl.addEventListener(TapController.ON_RELEASE, ctrl_onRelease);
+				ctrl.addEventListener(TapController.ON_TAP, ctrl_onTap);
+			}
+		}
+		private function disableControl():void
+		{
+			if (ctrl)
+			{
+				ctrl.enabled = false;
+				ctrl.removeEventListener(TapController.ON_PRESS, ctrl_onPress);
+				ctrl.removeEventListener(TapController.ON_RELEASE, ctrl_onRelease);
+				ctrl.removeEventListener(TapController.ON_TAP, ctrl_onTap);
+				ctrl = null;
+			}
+		}
+		private function callHandler():void
+		{
+			if (handlerAdded)
+			{
+				if (handlerParam != null) handlerFunc(handlerParam);
+				else handlerFunc();
+			}
+		}
+		//=========================================================================================
+		
+		//GETTERS && SETTERS:-------------------------------------------------------
 		public function get active():Boolean 
 		{
 			return _active;
 		}
+		
+		public function get clickable():Boolean 
+		{
+			return _clickable;
+		}
+		
+		public function set clickable(value:Boolean):void 
+		{
+			_clickable = value;
+			if (value) enableControl();
+			else disableControl();
+		}
+		
+		
+		//=====================================================================
 	}
 
 }

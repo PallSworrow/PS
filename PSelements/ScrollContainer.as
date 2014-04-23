@@ -13,9 +13,9 @@ package PS.PSelements
 	import flash.events.TouchEvent;
 	import flash.geom.Rectangle;
 	import flash.text.TextField;
-	import PScontroller.Controller;
-	import PScontroller.DragController;
-	import PSelements.micro.ScrollBar;
+	import PS.PScontroller.Controller;
+	import PS.PScontroller.DragController;
+	import PS.PSelements.micro.ScrollBar;
 	
 	/**
 	 * ...

@@ -3,12 +3,12 @@ package PS.PSelements.Switcher.Behaviors
 	import com.greensock.loading.core.DisplayObjectLoader;
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import PSelements.Switcher.Iswitcher;
+	import PS.PSelements.Switcher.IswitchBehavior;
 	/**
 	 * ...
 	 * @author ...
 	 */
-	public class ChangeAlphaBehavior implements Iswitcher
+	public class ChangeAlphaBehavior implements IswitchBehavior
 	{
 		protected var switchItem:DisplayObjectContainer;
 		

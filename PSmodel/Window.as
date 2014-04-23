@@ -89,7 +89,7 @@ package PS.PSmodel
 		public function loadChild(scr:Window):void //add new child
 		{
 			
-			closeChild();trace('ERROR');
+			closeChild();
 			myChild = scr;
 			addChild(myChild);
 			//addChild(myChild);
