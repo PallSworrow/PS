@@ -3,6 +3,7 @@ package PS.PSelements.micro
 	import air.net.ServiceMonitor;
 	import com.greensock.loading.core.DisplayObjectLoader;
 	import flash.display.DisplayObject;
+	import flash.display.InteractiveObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -42,7 +43,7 @@ package PS.PSelements.micro
 		
 		//GRAPHIC PARAMS:
 		private var indOffset:int;
-		private var indicator:Sprite;
+		private var indicator:InteractiveObject;
 		private var bg:DisplayObject;
 		private var fill:DisplayObject;
 		private var stepTrigger:Sprite;
@@ -60,6 +61,7 @@ package PS.PSelements.micro
 		
 		public function ScrollBar(Length:int, indicatorTex:DisplayObject, bgTex:DisplayObject, indicatorOffset:int = 0, fillTex:DisplayObject = null):void
 		{
+			trace('new ' + this);
 			length = Length;
 			indOffset = indicatorOffset;
 			
@@ -70,13 +72,18 @@ package PS.PSelements.micro
 			
 			//fill
 			fill = fillTex;
-			
-			indicator = new Sprite();
-			indicator.addChild(indicatorTex);
+			if (indicatorTex is ScalableLine)
+			{
+				indicator = (indicatorTex as ScalableLine);
+			}
+			else
+			{
+				indicator = new Sprite();
+				(indicator as Sprite).addChild(indicatorTex);
+				
+			}
 			indicator.x = -indicator.width / 2;
-			indicator.y = indOffset;
-			
-			
+				indicator.y = indOffset;
 			init(0.3);
 			
 		}
@@ -110,7 +117,6 @@ package PS.PSelements.micro
 			//add fill
 			
 			addChild(stepTrigger);
-			
 			indicator.height = (bg.height - indOffset * 2) * proportion;
 			addChild(indicator);
 			
@@ -147,6 +153,7 @@ package PS.PSelements.micro
 		{
 			dispatchEvent(new Event(ON_CHANGE));
 			dispatchEvent(new Event(ON_SCROLL));
+			
 		}
 		private function onTap(e:Event):void 
 		{

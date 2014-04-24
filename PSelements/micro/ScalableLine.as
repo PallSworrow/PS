@@ -1,19 +1,20 @@
 package PS.PSelements.micro 
 {
+	import flash.utils.ByteArray;
+	import PS.PSmodel.LogTracker;
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
-	import PSmodel.LogTracker;
 	/**
 	 * ...
 	 * @author 
 	 */
 	public class ScalableLine extends Sprite
 	{
-		protected var endImg0:Bitmap;
-		protected var endImg1:Bitmap;
+		protected var endImg0:DisplayObject;
+		protected var endImg1:DisplayObject;
 		protected var centerImg:Bitmap;
 		protected var minLength:int;
 		protected var endHeight:int;
@@ -38,33 +39,38 @@ package PS.PSelements.micro
 			endImg1 = new Bitmap(bmData);
 			
 			
+			
+			
+		
+			trace(endImg1);
 			var bmData2:BitmapData = new BitmapData(centerTextrure.width, centerTextrure.height,true,0);
 			bmData2.draw(centerTextrure);
 			
 			centerImg = new Bitmap(bmData2);
+			
 			addChild(centerImg);
 			
 			centerImg.y = endImg0.height;
 			minLength = endImg0.height * 2;
 			endHeight = endImg0.height;
-			/*
 		
 			
-		
 			
-			//*/
-				addChild(endImg0);
+			addChild(endImg0);
 			endImg1.rotation = 180;
 			endImg1.x = endImg1.width;
-			addChild(endImg1);
-			//endImg1.y = 200;
-			
 			
 			
 			setSize(length);
 			
 		}
-	
+		function clone( source:Object ):Object
+		{ 
+			var myBA:ByteArray = new ByteArray(); 
+			myBA.writeObject( source ); 
+			myBA.position = 0; 
+			return( myBA.readObject() ); 
+		}
 		public function setSize(l:int):void
 		{
 			if (l < minLength) l = minLength;
@@ -82,9 +88,8 @@ package PS.PSelements.micro
 		override public function set height(value:Number):void 
 		{
 			trace('set height');
-			//super.height = value;
+			trace('x=' + endImg0.x);
 			setSize(value);
-			super.height = value;
 		}
 		
 		

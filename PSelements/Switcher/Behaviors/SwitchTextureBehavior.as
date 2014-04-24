@@ -18,7 +18,7 @@ package PS.PSelements.Switcher.Behaviors
 		protected var enabled:Boolean = false;
 		protected var active:Boolean = false;
 		
-		public function SwitchTextureBehavior(onActiveImage:DisplayObject,onPressImage:DisplayObject) 
+		public function SwitchTextureBehavior(onActiveImage:DisplayObject,onPressImage:DisplayObject=null) 
 		{
 			onActiveImg = onActiveImage;
 			onPressImg = onPressImage;
@@ -61,9 +61,13 @@ package PS.PSelements.Switcher.Behaviors
 			//trace('press');
 			if (!enabled) return;
 			
-			if(onPressImg) onPressImg.visible = true;
-			normalImg.visible = false;
-			onActiveImg.visible = false;
+			if (onPressImg) 
+			{
+				onPressImg.visible = true;
+				normalImg.visible = false;
+				onActiveImg.visible = false;
+			}
+			
 			
 		}
 		public function onRelease():void
