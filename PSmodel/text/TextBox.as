@@ -1,6 +1,8 @@
 package PS.PSmodel.text 
 {
 	import fl.text.TLFTextField;
+	import flash.text.TextFieldAutoSize;
+	import flash.text.TextFormat;
 	
 	/**
 	 * ...
@@ -9,7 +11,7 @@ package PS.PSmodel.text
 	public class TextBox extends TLFTextField 
 	{
 		
-		public function TextBox(w:int, str:String = '',param:Object = null) 
+		public function TextBox(w:int,param:Object = null) 
 		{
 			super();
 			var font:TextFormat;
@@ -50,9 +52,19 @@ package PS.PSmodel.text
 			//border = true;
 			embedFonts = true;
 			selectable = false;
-			htmlText = str;
+			
 			
 			setTextFormat(font);
+		}
+		override public function get text():String 
+		{
+			return super.text;
+		}
+		
+		override public function set text(value:String):void 
+		{
+			//super.text = value;
+			htmlText = value;
 		}
 		
 	}

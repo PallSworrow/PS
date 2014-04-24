@@ -63,6 +63,7 @@ package PS.PSelements.micro
 				{
 					if (parameters.ftsType == 'fill') ftsType = 'fill';
 					if (parameters.ftsType == 'full') ftsType = 'full';
+					if (parameters.ftsType == 'horizontal') ftsType = 'horizontal';
 				}
 				if (parameters.bg)
 				{
@@ -156,13 +157,17 @@ package PS.PSelements.micro
 			trace('imgH=' + img.height);
 			trace('boxW='+box.width);
 			trace('boxH='+box.height);*/
-			if(fts) fitTheSize();
 			
 			
 			
 			
+		
 			addChild(box);
-			box.mask = msk;
+			if (fts) 
+			{
+				fitTheSize();
+				box.mask = msk;
+			}
 			dispatchEvent(new Event(ON_SHOW));
 		}
 		
@@ -197,10 +202,15 @@ package PS.PSelements.micro
 				if(sx < sy)resScale = sx;
 				else resScale = sy;
 			}
-			else 
+			else if(ftsType == 'fill')
 			{
 				if (sx < sy) resScale = sy;
 				else resScale = sx;
+			}
+			else if (ftsType == 'horizontal')
+			{
+				customFTS('horizontal');
+				return;
 			}
 			
 			
@@ -218,14 +228,14 @@ package PS.PSelements.micro
 		
 		public function customFTS(type:String = 'horizontal'):void
 		{
-			trace('------CUSTOM FTS------')
-			trace(box.width);
+			/*trace('------CUSTOM FTS------')
+			trace(box.width);*/
 			if (type == 'horizontal')
 			{
 				var sy:Number = maskH / box.height;
-				trace('maskH = ' + maskH);
+				/*trace('maskH = ' + maskH);
 				trace('boxH = ' + box.height);
-				trace('sy = ' + sy);
+				trace('sy = ' + sy);*/
 				box.scaleX = box.scaleY = sy;
 				maskW = box.width;
 				
@@ -239,7 +249,7 @@ package PS.PSelements.micro
 				
 				
 			}
-			trace('<=========>');
+			//trace('<=========>');
 		}
 		
 		

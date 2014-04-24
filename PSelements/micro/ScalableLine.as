@@ -1,5 +1,6 @@
 package PS.PSelements.micro 
 {
+	import flash.events.Event;
 	import flash.utils.ByteArray;
 	import PS.PSmodel.LogTracker;
 	import flash.display.Bitmap;
@@ -62,7 +63,13 @@ package PS.PSelements.micro
 			
 			
 			setSize(length);
-			
+			//test();
+		//	addEventListener(Event.ENTER_FRAME, enterFrame);
+		}
+		
+		private function enterFrame(e:Event):void 
+		{
+		
 		}
 		
 		public function setSize(l:int):void
@@ -81,10 +88,14 @@ package PS.PSelements.micro
 		
 		override public function set height(value:Number):void 
 		{
-			trace('set height');
-			trace('x=' + endImg0.x);
+			
 			setSize(value);
 		}
+		/*public function test():void
+		{
+			trace('Test');
+			trace('x=' + centerImg.width);
+		}*/
 		
 		
 	}

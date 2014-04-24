@@ -30,7 +30,7 @@ package PS.PSmodel
 		public function Window(_owner:Window,prevChild:Window=null) 
 		{
 			super();
-			trace('new ' + this);
+			//trace('new ' + this);
 			previous = prevChild;
 			//owner = _owner;
 			
@@ -58,7 +58,7 @@ package PS.PSmodel
 		}
 		protected function kill():void 
 		{
-			trace('kill window');
+			//trace('kill window');
 			
 			super.removeChild(contentBox);
 			controller.enabled = false;
@@ -84,7 +84,7 @@ package PS.PSmodel
 		public function close():void//on close btn
 		{
 			dispatchEvent(new Event(CLOSE));
-			trace('close');
+			//trace('close');
 		}
 		public function loadChild(scr:Window):void //add new child
 		{

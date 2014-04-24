@@ -294,13 +294,13 @@ package PS.PSelements.video
 		override public function set width(value:Number):void 
 		{
 			progressBar.scaleX = value / bg.width;
-			bg.width = value;
+			if(bg)bg.width = value;
 		}
 		
 		override public function set height(value:Number):void 
 		{
 			progressBar.scaleY = value / bg.height;
-			bg.height = value;
+			if(bg)bg.height = value;
 		}
 		
 		

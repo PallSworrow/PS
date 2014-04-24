@@ -186,7 +186,7 @@ package PS.PSelements
 		
 		
 		
-		public function scrollTo(targ:Number):void
+		public function scrollTo(targ:Number, correctSbPos:Boolean = false):void
 		{
 			if (_needScroll)
 			{
@@ -195,7 +195,7 @@ package PS.PSelements
 			
 				if(horizontal) TweenLite.to(obj, tweeningTime, {x : ( -_maxOffset) * targ } );
 				else TweenLite.to(obj, tweeningTime, { y : ( -_maxOffset) * targ } );
-				correctScrollBarPosition(targ);
+				if(correctSbPos) correctScrollBarPosition(targ);
 				
 			}
 		}
@@ -231,6 +231,7 @@ package PS.PSelements
 		private var sb:ScrollBar;
 		private function correctScrollBarPosition(pos:Number =-1):void
 		{
+			
 			if (sb)
 			{
 				if (pos == -1)
@@ -240,7 +241,7 @@ package PS.PSelements
 				}
 				else
 				{
-					trace('tweenMax');
+					//trace('tweenMax');
 					TweenMax.to(sb, tweeningTime, { persent:pos } );
 				}
 			}
@@ -264,7 +265,7 @@ package PS.PSelements
 					if (horizontal) sb.init(W / size);
 					else sb.init(H / size);
 					
-					trace(needScroll);
+					//trace(needScroll);
 					if (needScroll)	showScrollBar();
 					else hideScrollBar();
 				}

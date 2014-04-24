@@ -4,9 +4,9 @@ package PS.PSmodel.popupSystem
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import PScontroller.Controller;
-	import PScontroller.TapController;
-	import PSmodel.Engine;
+	import PS.PScontroller.Controller;
+	import PS.PScontroller.TapController;
+	import PS.PSmodel.Engine;
 	
 	/**
 	 * ...

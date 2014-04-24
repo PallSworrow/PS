@@ -67,7 +67,9 @@ package PS.PSelements.micro
 			
 			bg=bgTex;
 			bg.x = -bg.width / 2;
+			
 			bg.height = length;
+			
 			
 			
 			//fill
@@ -120,7 +122,6 @@ package PS.PSelements.micro
 			indicator.height = (bg.height - indOffset * 2) * proportion;
 			addChild(indicator);
 			
-			
 			enabled = true;
 		}
 		
@@ -133,7 +134,7 @@ package PS.PSelements.micro
 		public function set enabled(value:Boolean):void 
 		{
 			if (_enabled == value) return;
-		
+			trace('H='+indicator.height);
 			if (value)
 			{
 				maxOffset =  bg.height - 2 * indOffset - indicator.height;
@@ -153,6 +154,7 @@ package PS.PSelements.micro
 		{
 			dispatchEvent(new Event(ON_CHANGE));
 			dispatchEvent(new Event(ON_SCROLL));
+			//(indicator as ScalableLine).test();
 			
 		}
 		private function onTap(e:Event):void 
@@ -164,14 +166,14 @@ package PS.PSelements.micro
 				
 				if (stepControll.localY > indicator.y-indOffset) 
 				{
-					trace('up')
+					//trace('up')
 					persent = persent + 0.2;
 					dispatchEvent(new Event(ON_STEP));
 					dispatchEvent(new Event(ON_CHANGE));
 				}
 				else if (stepControll.localY < indicator.y-indOffset) {
 					
-					trace('down');
+					//trace('down');
 					persent = persent - 0.2;
 					dispatchEvent(new Event(ON_STEP));
 					dispatchEvent(new Event(ON_CHANGE));

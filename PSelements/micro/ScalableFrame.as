@@ -5,7 +5,7 @@ package PS.PSelements.micro
 	import flash.display.DisplayObject;
 	import flash.display.IBitmapDrawable;
 	import flash.display.Sprite;
-	import PSmodel.LogTracker;
+	import PS.PSmodel.LogTracker;
 	/**
 	 * ...
 	 * @author 

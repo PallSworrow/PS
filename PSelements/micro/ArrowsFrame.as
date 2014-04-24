@@ -5,7 +5,7 @@ package PS.PSelements.micro
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import PSelements.Switcher.SwitchButton;
+	import PS.PSelements.Switcher.SwitchButton;
 	
 	/**
 	 * ...

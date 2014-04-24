@@ -13,10 +13,10 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 	import flash.events.TouchEvent;
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
-	import PScontroller.Controller;
-	import PScontroller.DragController;
-	import PScontroller.SwipeController;
-	import PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
+	import PS.PScontroller.Controller;
+	import PS.PScontroller.DragController;
+	import PS.PScontroller.SwipeController;
+	import PS.PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
 	
 	/**
 	 * ...
