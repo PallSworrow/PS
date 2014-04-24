@@ -64,13 +64,7 @@ package PS.PSelements.micro
 			setSize(length);
 			
 		}
-		function clone( source:Object ):Object
-		{ 
-			var myBA:ByteArray = new ByteArray(); 
-			myBA.writeObject( source ); 
-			myBA.position = 0; 
-			return( myBA.readObject() ); 
-		}
+		
 		public function setSize(l:int):void
 		{
 			if (l < minLength) l = minLength;
