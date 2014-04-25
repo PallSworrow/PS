@@ -14,7 +14,7 @@ package PS.PSelements.video
 	 */
 	public class VideoBox extends Sprite 
 	{
-		
+		public static const ONLOAD:String = 'onload';
 		private var vl:IVideoPlayer;
 		private var vc:VPControls;
 		
@@ -129,6 +129,7 @@ package PS.PSelements.video
 		
 		private function vl_onLoad(e:Event):void 
 		{
+			
 			vc.width = vl.width;
 			trace(vl.width);
 			vc.x = (vl.width - vc.width) / 2
@@ -147,6 +148,7 @@ package PS.PSelements.video
 			
 			fogBG2play.width = vl.width;
 			fogBG2play.height = vl.height;
+			dispatchEvent(new Event(ONLOAD));
 		}
 		public function load(id:String):void
 		{

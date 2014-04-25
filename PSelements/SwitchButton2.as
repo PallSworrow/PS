@@ -27,14 +27,14 @@ package PS.PSelements
 		private var group:String;
 		
 		private var controlledSwitcher:SwitchButton2;
-		public function SwitchButton2(obj:DisplayObject,addToGroup:String) 
+		public function SwitchButton2(obj:DisplayObject,addToGroup:String=null) 
 		{
 			super();
 			texture = obj;
 			addChild(texture);
 			clickable = true;
 			group = addToGroup;
-			switcherGroups.addToGroup(this, group);
+			if(addToGroup) switcherGroups.addToGroup(this, group);
 			
 			
 			
@@ -96,7 +96,7 @@ package PS.PSelements
 		private var handlerFunc:Function;
 		private var handlerParam:Object;
 		private var handlerAdded:Boolean = false;
-		public function addHandler(handler:Function, param:Object):void
+		public function addHandler(handler:Function, param:Object=null):void
 		{
 			handlerAdded = true;
 			handlerFunc = handler;

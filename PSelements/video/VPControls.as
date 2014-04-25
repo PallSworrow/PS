@@ -154,7 +154,7 @@ package PS.PSelements.video
 			{
 				
 			
-				_progressBar.persent = player.progress;
+				if (player.isPlaying) _progressBar.persent = player.progress;
 				if (player.isPlaying != isPlaying)
 				{
 					
@@ -205,7 +205,8 @@ package PS.PSelements.video
 		}
 		protected function get bg():DisplayObject 
 		{
-			return _bg;
+			if (_bg) return _bg;
+			else return null;
 		}
 		//======================================================================
 		
@@ -293,13 +294,13 @@ package PS.PSelements.video
 		
 		override public function set width(value:Number):void 
 		{
-			progressBar.scaleX = value / bg.width;
+			//progressBar.scaleX = width / bg.width;
 			if(bg)bg.width = value;
 		}
 		
 		override public function set height(value:Number):void 
 		{
-			progressBar.scaleY = value / bg.height;
+			//progressBar.scaleY = value / bg.height;
 			if(bg)bg.height = value;
 		}
 		

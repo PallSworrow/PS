@@ -63,6 +63,15 @@ package PS.PSelements.micro
 			return null;
 		}
 		
+		public function getSizeOfXrows(rows:int):int
+		{
+			if (_vertical) return _itemHeight * rows + _itvY * (rows-1);
+			else return _itemWidth * rows + _itvX * (rows-1);
+			
+		}
+		
+		
+		
 		public function get rows():int {return _rows;}
 		
 		public function get intervalX():int {return _itvX;}

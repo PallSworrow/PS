@@ -2,13 +2,13 @@ package PS.PSelements.Switcher.Behaviors
 {
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import PSelements.Switcher.Iswitcher;
+	import PS.PSelements.Switcher.IswitchBehavior;
 	
 	/**
 	 * ...
 	 * @author 
 	 */
-	public class FogWithPictureBehavior implements Iswitcher 
+	public class FogWithPictureBehavior implements IswitchBehavior 
 	{
 		private var fog:DisplayObject;
 		private var nativeImg:DisplayObject;
@@ -28,7 +28,7 @@ package PS.PSelements.Switcher.Behaviors
 			nativeImg = nativeTexture;
 			
 			switchItem.addChild(fog);
-			fog.visible = false;
+			unselect();
 			enabled = true;
 		}
 		public function select():void 

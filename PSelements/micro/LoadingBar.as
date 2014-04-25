@@ -40,6 +40,7 @@ package PS.PSelements.micro
 			addChild(loaded);*/
 			
 			bg = bgTexture;
+			bg.width = w;
 			addChild(bg);
 			loaded = fillTexture
 			addChild(loaded);
@@ -68,6 +69,7 @@ package PS.PSelements.micro
 		
 		public function set persent(val:Number):void // 0.0 -> 1.0
 		{
+			
 			if (val > 1) val = 1;
 			if (val < 0) val = 0;
 			loaded.width = size * val;
