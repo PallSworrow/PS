@@ -17,7 +17,7 @@ package PS.PSelements.micro
 		protected var endImg0:DisplayObject;
 		protected var endImg1:DisplayObject;
 		protected var centerImg:Bitmap;
-		protected var minLength:int;
+		protected var _minLength:int;
 		protected var endHeight:int;
 		
 		/*/планы:
@@ -30,8 +30,11 @@ package PS.PSelements.micro
 		другие настройки?
 		
 		/*/
-		public function ScalableLine(endTextrure:DisplayObject, centerTextrure:DisplayObject, length:int=0) 
+		private var currentLength:int;
+		private var isVertical:Boolean;
+		public function ScalableLine(endTextrure:DisplayObject, centerTextrure:DisplayObject, vertical:Boolean=true) 
 		{
+			//isVertical = vertical;
 			var bmData:BitmapData;
 			bmData = new BitmapData(endTextrure.width, endTextrure.height,true,0);
 			bmData.draw(endTextrure);
@@ -42,8 +45,6 @@ package PS.PSelements.micro
 			
 			
 			
-		
-			trace(endImg1);
 			var bmData2:BitmapData = new BitmapData(centerTextrure.width, centerTextrure.height,true,0);
 			bmData2.draw(centerTextrure);
 			
@@ -52,17 +53,18 @@ package PS.PSelements.micro
 			addChild(centerImg);
 			
 			centerImg.y = endImg0.height;
-			minLength = endImg0.height * 2;
+			_minLength = endImg0.height * 2;
 			endHeight = endImg0.height;
 		
 			
 			
 			addChild(endImg0);
+			addChild(endImg1);
 			endImg1.rotation = 180;
 			endImg1.x = endImg1.width;
 			
 			
-			setSize(length);
+			setSize(0);
 			//test();
 		//	addEventListener(Event.ENTER_FRAME, enterFrame);
 		}
@@ -74,8 +76,9 @@ package PS.PSelements.micro
 		
 		public function setSize(l:int):void
 		{
-			if (l < minLength) l = minLength;
 			
+			if (l < _minLength) l = _minLength;
+			currentLength = l;
 			centerImg.height = l - endHeight * 2;
 			endImg1.y = endHeight*2 + centerImg.height;
 			
@@ -90,6 +93,14 @@ package PS.PSelements.micro
 		{
 			
 			setSize(value);
+		}
+		public function get length():int
+		{
+			return currentLength;
+		}
+		public function get minLength():int 
+		{
+			return _minLength;
 		}
 		/*public function test():void
 		{

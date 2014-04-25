@@ -241,7 +241,7 @@ package PS.PSelements.micro
 				
 				
 				
-				box.x = maskOffsetX + (maskW - box.width) / 2;
+				box.x = 0;
 				box.y = 0;
 				
 				msk.x = box.x;

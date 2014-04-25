@@ -15,6 +15,7 @@ package PS.PSelements.video
 	public class VideoBox extends Sprite 
 	{
 		public static const ONLOAD:String = 'onload';
+		public static const ONCLEAR:String = 'onclear';
 		private var vl:IVideoPlayer;
 		private var vc:VPControls;
 		
@@ -82,12 +83,17 @@ package PS.PSelements.video
 			vc.y = vl.height - vc.height;
 			
 			vl.addEventListener(vl.EVENT_ON_LOAD, vl_onLoad);
-			
+			vl.addEventListener(vl.EVENT_ON_CLEAR, vl_eventOnClear);
 			
 		
 			
 			
 			//================================
+		}
+		
+		private function vl_eventOnClear(e:Event):void 
+		{
+			dispatchEvent(new Event(ONCLEAR));
 		}
 		
 		private function vc_play(e:Event):void 
@@ -140,8 +146,8 @@ package PS.PSelements.video
 			if (fogBtn)
 			{
 				
-				fogBtn.x = (fogBGpause.width - fogBtn.width) / 2;
-				fogBtn.y = (fogBGpause.height - fogBtn.height) / 2;
+				fogBtn.x = (vl.width - fogBtn.width) / 2;
+				fogBtn.y = (vl.height - fogBtn.height) / 2;
 			}
 			fog.x = (vl.width - fog.width) / 2;
 			fog.y = (vl.height - fog.height) / 2;
@@ -154,6 +160,11 @@ package PS.PSelements.video
 		{
 			vl.load(id);
 			fog.visible = false;
+		}
+		
+		protected function get currentVideoPlayer():IVideoPlayer 
+		{
+			return vl;
 		}
 		
 	}

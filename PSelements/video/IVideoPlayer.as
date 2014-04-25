@@ -9,6 +9,7 @@ package PS.PSelements.video
 	public interface IVideoPlayer extends IEventDispatcher
 	{
 		function get EVENT_ON_LOAD():String;
+		function get EVENT_ON_CLEAR():String;
 		function load(link:String):void;
 		function play():void
 		function stop():void

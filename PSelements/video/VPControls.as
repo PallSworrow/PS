@@ -78,6 +78,7 @@ package PS.PSelements.video
 			
 			if (volumeControll)
 			{
+				soundBtnFunction = 'showVolumeBar'
 				_volumeBar = volumeControll;
 				addChild(_volumeBar);
 				_volumeBar.addEventListener(ScrollBar.ON_CHANGE, onVolumeBarChanged);
