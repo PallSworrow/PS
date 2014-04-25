@@ -28,7 +28,7 @@ package PS.PSelements.video
 		private var fogBGpause:Shape;
 		private var fogBG2play:Shape;
 		private var fogBtn:DisplayObject;
-		public function VideoBox(video:IVideoPlayer, playerControls:VPControls, fogButton:DisplayObject=null) 
+		public function VideoBox(video:IVideoPlayer, playerControls:VPControls, fogButton:DisplayObject=null, upperFrame:DisplayObject=null) 
 		{
 			//local:
 			vl = video;
@@ -77,10 +77,10 @@ package PS.PSelements.video
 			
 			
 			addChild((vl as DisplayObject));
+			if(upperFrame)addChild(upperFrame);
 			addChild(fog);
 			addChild(vc);
 			vc.init(vl);
-			vc.y = vl.height - vc.height;
 			
 			vl.addEventListener(vl.EVENT_ON_LOAD, vl_onLoad);
 			vl.addEventListener(vl.EVENT_ON_CLEAR, vl_eventOnClear);
@@ -138,7 +138,7 @@ package PS.PSelements.video
 			
 			vc.width = vl.width;
 			trace(vl.width);
-			vc.x = (vl.width - vc.width) / 2
+			//vc.x = (vl.width - vc.width) / 2;
 			
 			fog.visible = true;
 			fogBGpause.width = vl.width;
@@ -165,6 +165,11 @@ package PS.PSelements.video
 		protected function get currentVideoPlayer():IVideoPlayer 
 		{
 			return vl;
+		}
+		
+		protected function get currentControlls():VPControls 
+		{
+			return vc;
 		}
 		
 	}

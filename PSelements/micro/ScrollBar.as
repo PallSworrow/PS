@@ -96,7 +96,7 @@ package PS.PSelements.micro
 			enabled = false;
 			
 			if (proportion > 1) proportion = 1;
-			if (proportion < 0.2) proportion = 0.2; 
+			if (proportion <= 0) proportion = 0.2; 
 			
 			stepTrigger = new Sprite();
 			var square:Shape;
@@ -117,7 +117,13 @@ package PS.PSelements.micro
 			
 			addChild(bg);
 			//add fill
-			
+			if (fill)
+			{
+				addChild(fill);
+				fill.x = -fill.width / 2;
+				
+				
+			}
 			addChild(stepTrigger);
 			indicator.height = (bg.height - indOffset * 2) * proportion;
 			addChild(indicator);
@@ -140,6 +146,7 @@ package PS.PSelements.micro
 				maxOffset =  bg.height - 2 * indOffset - indicator.height;
 				ctrl = Controller.addDragListener(indicator, new Rectangle(-indicator.width / 2,indOffset,  0,maxOffset));
 				ctrl.addEventListener(DragController.ON_DRAG, onDrag);
+				fillUpdate();
 			}
 			else
 			{
@@ -154,8 +161,12 @@ package PS.PSelements.micro
 		{
 			dispatchEvent(new Event(ON_CHANGE));
 			dispatchEvent(new Event(ON_SCROLL));
-			//(indicator as ScalableLine).test();
+			fillUpdate();
 			
+		}
+		private function fillUpdate():void
+		{
+			if(fill) fill.height = length * persent;
 		}
 		private function onTap(e:Event):void 
 		{
@@ -195,6 +206,7 @@ package PS.PSelements.micro
 			if (val > 1) val = 1;
 			if (val < 0) val = 0;
 			indicator.y = indOffset + maxOffset * val;
+			fillUpdate();
 		}
 		
 		

@@ -1,9 +1,12 @@
 package PS.PSelements.video 
 {
 	import com.greensock.loading.core.DisplayObjectLoader;
+	import com.greensock.TimelineLite;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 	import PS.PScontroller.Controller;
 	import PS.PScontroller.TapController;
 	import PS.PSelements.micro.LoadingBar;
@@ -80,8 +83,11 @@ package PS.PSelements.video
 			{
 				soundBtnFunction = 'showVolumeBar'
 				_volumeBar = volumeControll;
+				_volumeBar.rotation = 180;
 				addChild(_volumeBar);
 				_volumeBar.addEventListener(ScrollBar.ON_CHANGE, onVolumeBarChanged);
+				_volumeBar.persent = _volume;
+				_volumeBar.visible = false;
 			}
 			
 		}
@@ -127,10 +133,12 @@ package PS.PSelements.video
 		}
 		private function onSoundBtn(e:Object):void 
 		{
+			
 			switch(soundBtnFunction) 
 			{
 				case 'showVolumeBar':
-					showVolumeBar();
+					if (_volumeBar.visible) hideVolumeBar();
+					else showVolumeBar();
 					break;
 					
 				case 'switchSound':
@@ -139,14 +147,30 @@ package PS.PSelements.video
 					break;
 			}
 		}
-		
+		private var hideVBtimer:Timer;
 		private function showVolumeBar():void
 		{
-			if(_volumeBar)_volumeBar.visible = true;
+			if (_volumeBar)_volumeBar.visible = true;
+			hideVBtimer = new Timer(5000, 0);
+			hideVBtimer.start();
+			hideVBtimer.addEventListener(TimerEvent.TIMER, hideVBtimer_tick);
+		}
+		
+		private function hideVBtimer_tick(e:TimerEvent):void 
+		{
+			hideVolumeBar();
+		}
+		private function prolongVBtimer():void
+		{
+			hideVBtimer.reset();
+			hideVBtimer.start();
 		}
 		private function hideVolumeBar():void
 		{
-			if(_volumeBar)_volumeBar.visible = false;
+			if (_volumeBar)_volumeBar.visible = false;
+			hideVBtimer.stop();
+			hideVBtimer.removeEventListener(TimerEvent.TIMER, hideVBtimer_tick);
+			hideVBtimer = null;
 		}
 		
 		private function update(e:Event):void 
@@ -170,11 +194,12 @@ package PS.PSelements.video
 		private function onVolumeBarChanged(e:Event):void 
 		{
 			volume = _volumeBar.persent;
+			prolongVBtimer();
 		}
 		
 		private function goto(e:Event):void 
 		{
-			progress = (_progressBar.x + gotoController.localX) / _progressBar.width ;  
+			progress = (gotoController.localX*_progressBar.scaleX) / _progressBar.width ;  
 		}
 		
 		
@@ -292,19 +317,29 @@ package PS.PSelements.video
 		}
 		
 		
+		public function setSize(w:int, h:int):void
+		{
+			
+		}
+		
+		override public function get width():Number 
+		{
+			return super.width;
+		}
 		
 		override public function set width(value:Number):void 
 		{
-			//progressBar.scaleX = width / bg.width;
-			if(bg)bg.width = value;
+			//super.width = value;
+		}
+		override public function get height():Number 
+		{
+			return super.height;
 		}
 		
 		override public function set height(value:Number):void 
 		{
-			//progressBar.scaleY = value / bg.height;
-			if(bg)bg.height = value;
+			
 		}
-		
 		
 	}
 
