@@ -17,8 +17,8 @@ package PS.PSelements.micro
 		protected var endImg0:DisplayObject;
 		protected var endImg1:DisplayObject;
 		protected var centerImg:Bitmap;
-		protected var _minLength:int;
-		protected var endHeight:int;
+		protected var _minLength:Number;
+		protected var endHeight:Number;
 		
 		/*/планы:
 		добавить возможность не растягивать центральную текстурку, а копировать н-кол-во раз.
@@ -30,7 +30,7 @@ package PS.PSelements.micro
 		другие настройки?
 		
 		/*/
-		private var currentLength:int;
+		private var currentLength:Number;
 		private var isVertical:Boolean;
 		public function ScalableLine(endTextrure:DisplayObject, centerTextrure:DisplayObject, vertical:Boolean=true) 
 		{
@@ -60,18 +60,19 @@ package PS.PSelements.micro
 			
 			addChild(endImg0);
 			addChild(endImg1);
-			endImg1.rotation = 180;
 			endImg1.x = endImg1.width;
+			endImg1.rotation = 180;
+			
 			
 			
 			setSize(0);
 			//test();
-		//	addEventListener(Event.ENTER_FRAME, enterFrame);
+			//addEventListener(Event.ENTER_FRAME, enterFrame);
 		}
 		
 		private function enterFrame(e:Event):void 
 		{
-		
+			//trace(endImg1.x);
 		}
 		
 		public function setSize(l:int):void
@@ -94,11 +95,11 @@ package PS.PSelements.micro
 			
 			setSize(value);
 		}
-		public function get length():int
+		public function get length():Number
 		{
 			return currentLength;
 		}
-		public function get minLength():int 
+		public function get minLength():Number 
 		{
 			return _minLength;
 		}

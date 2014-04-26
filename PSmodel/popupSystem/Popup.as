@@ -62,7 +62,7 @@ package PS.PSmodel.popupSystem
 			if (ctrl.targetName == closeButtonName) close();
 			
 			tapX = ctrl.stageX - (Engine.popupContainer.x+item.x);
-			tapX = ctrl.stageY - (Engine.popupContainer.y + item.y);
+			tapY = ctrl.stageY - (Engine.popupContainer.y + item.y);
 			dispatchEvent(new PopupEvent(PopupEvent.ON_TAP));
 			
 		}

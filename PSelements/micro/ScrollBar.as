@@ -84,7 +84,7 @@ package PS.PSelements.micro
 				(indicator as Sprite).addChild(indicatorTex);
 				
 			}
-			indicator.x = -indicator.width / 2;
+			indicator.x = Math.round(-indicator.width / 2);
 				indicator.y = indOffset;
 			init(0.3);
 			
@@ -140,11 +140,11 @@ package PS.PSelements.micro
 		public function set enabled(value:Boolean):void 
 		{
 			if (_enabled == value) return;
-			trace('H='+indicator.height);
+			trace('X='+indicator.x);
 			if (value)
 			{
 				maxOffset =  bg.height - 2 * indOffset - indicator.height;
-				ctrl = Controller.addDragListener(indicator, new Rectangle(-indicator.width / 2,indOffset,  0,maxOffset));
+				ctrl = Controller.addDragListener(indicator, new Rectangle(indicator.x,indOffset,  0,maxOffset));
 				ctrl.addEventListener(DragController.ON_DRAG, onDrag);
 				fillUpdate();
 			}

@@ -49,17 +49,13 @@ package PS.PSelements.popups.galleryTyped
 			
 		}
 		
-		override protected function onTap(e:Event):void 
+		
+		override public function close():void 
 		{
-			
-			super.onTap(e);
-			/*if (IPC) 
-			{
-				IPC.removeEventListener(CarruselItemBehavior.LOWER_LIMIT_EXCEEDED,onItemTweenedLeft);
-				IPC.removeEventListener(CarruselItemBehavior.UPPER_LIMIT_EXCEEDED, onItemTweenedRight);
-			}
-			IPC = null;
-			close();*/
+			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
+			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
+			GPI = null;
+			super.close();
 		}
 		protected function createItem():GalleryPopupItem//MUST OVERRIDE
 		{

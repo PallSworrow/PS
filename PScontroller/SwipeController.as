@@ -50,29 +50,26 @@ package PS.PScontroller
 		
 		private function onSwipeRight(e:GestureEvent):void 
 		{
-			/*trace('swiperight');
+			trace('swiperight');
 			if (canI('GT'))
 			{
-			/*	
+				
 				resetListenerType();
 				dispatchEvent(new Event(SWIPE_RIGHT));
-			}*/
+			}
 			
 		}
 		
 		private function onSwipeLeft(e:GestureEvent):void 
 		{
-			//trace('swipeleft ' + leftGessture.state);
-			/*/trace(leftGessture.direction);
+			trace('swipeleft ');
 			
 			if (canI('GT'))
 			{
-				/*dispatchEvent(new Event(SWIPE_LEFT));
+				dispatchEvent(new Event(SWIPE_LEFT));
 				resetListenerType();
-				*/
-				//
-				//
-			//}
+				
+			}
 		}
 		
 		
