@@ -5,8 +5,8 @@ package PS.PSelements.popups.galleryTyped
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import PS.PSelements.popups.galleryTyped.gpb.CarruselItemBehavior;
 	import PS.PSmodel.popupSystem.Popup;
-	import PS.PSmodel.DelegatedBehaviors.Behaviors.CarruselItemBehavior;
 	import PS.PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
 	import PS.PSmodel.Globals;
 	
@@ -18,7 +18,7 @@ package PS.PSelements.popups.galleryTyped
 	{
 		private var arr:Array;
 		private var index:int;
-		private var GPI:GalleryPopupItem;
+		protected var GPI:GalleryPopupItem;
 		private var box:Sprite;
 		/*
 		funcs:
@@ -51,9 +51,14 @@ package PS.PSelements.popups.galleryTyped
 			IPC = null;
 			close();*/
 		}
-		protected function createContent(data:Object):GalleryPopupItem//MUST OVERRIDE
+		protected function createItem():GalleryPopupItem//MUST OVERRIDE
 		{
 			return null;
+		}
+		protected function setBehavior(canLeft:Boolean, canRight:Boolean):GPIbehavior//MUST OVERRIED
+		{
+			//HARD-CODE!
+			return new CarruselItemBehavior(GPI , new Rectangle(0, GPI.y, Globals.stageWidth, 0), 400, true, { banUp: !canRight, banDown: !canLeft } );
 		}
 		private function addItem(position:String):void//position: left/center/right
 		{
@@ -62,7 +67,8 @@ package PS.PSelements.popups.galleryTyped
 			Y0 = -572;
 			//=========================================
 			
-			GPI = createContent(arr[index]);
+			GPI = createItem();
+			GPI.createContent(arr[index]);
 			
 			//-------------------CHANGABLE--------------
 			GPI.y = 572;
@@ -85,22 +91,24 @@ package PS.PSelements.popups.galleryTyped
 			var canRight:Boolean = true;
 			if (index <= 0) canLeft = false;
 			if (index >= arr.length - 1) canRight = false;
-			GPI.initBehavior(canLeft, canRight);
-			GPI.addEventListener(CarruselItemBehavior.LOWER_LIMIT_EXCEEDED,onItemTweenedLeft);
-			GPI.addEventListener(CarruselItemBehavior.UPPER_LIMIT_EXCEEDED,onItemTweenedRight);
+			GPI.initBehavior(setBehavior(canLeft, canRight));
+			
+			
+			GPI.addEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
+			GPI.addEventListener(GPBevents.ON_NEXT,onItemTweenedRight);
 			box.addChild(GPI);
 		}
 		private function onItemTweenedRight(e:Event):void
 		{
-			GPI.removeEventListener(CarruselItemBehavior.LOWER_LIMIT_EXCEEDED,onItemTweenedLeft);
-			GPI.removeEventListener(CarruselItemBehavior.UPPER_LIMIT_EXCEEDED, onItemTweenedRight);
+			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
+			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
 			index--;
 			addItem('left');
 		}
 		private function onItemTweenedLeft(e:Event):void
 		{
-			GPI.removeEventListener(CarruselItemBehavior.LOWER_LIMIT_EXCEEDED,onItemTweenedLeft);
-			GPI.removeEventListener(CarruselItemBehavior.UPPER_LIMIT_EXCEEDED, onItemTweenedRight);
+			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
+			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
 			index++;
 			addItem('right');
 		}

@@ -1,4 +1,4 @@
-package PS.PSmodel.DelegatedBehaviors.Behaviors 
+package PS.PSelements.popups.galleryTyped.gpb 
 {
 	import com.greensock.events.TweenEvent;
 	import com.greensock.loading.core.DisplayObjectLoader;
@@ -9,6 +9,7 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.GameInputEvent;
 	import flash.events.TimerEvent;
 	import flash.events.TouchEvent;
 	import flash.geom.Rectangle;
@@ -16,19 +17,17 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 	import PS.PScontroller.Controller;
 	import PS.PScontroller.DragController;
 	import PS.PScontroller.SwipeController;
+	import PS.PSelements.popups.galleryTyped.GPIbehavior;
+	import PS.PSelements.popups.galleryTyped.GPBevents;
 	import PS.PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
 	
 	/**
 	 * ...
 	 * @author Павел
 	 */
-	public class CarruselItemBehavior extends EventDispatcher
+	public class CarruselItemBehavior extends GPIbehavior
 	{
-		public static const UPPER_LIMIT_EXCEEDED:String = 'upper_limit';
-		public static const LOWER_LIMIT_EXCEEDED:String = 'lower_limit';
-		public static const TWEENOUT_ENDED:String = 'tweenout_end';
 		
-		protected var obj:Sprite;
 		protected var dragRectangle:Rectangle;
 		protected var dragLimit:int;
 		protected var horizontal:Boolean;
@@ -48,7 +47,7 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 		
 		public function CarruselItemBehavior(item:Sprite, borders:Rectangle, setDragLimit:int,  isHorizontal:Boolean= true, properties:Object = null) 
 		{
-			
+			super(item);
 			if (!properties) props = new Object();
 			else 
 			{
@@ -59,7 +58,7 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 			checkProperties();
 			horizontal = isHorizontal;	
 			
-			obj = item;
+			
 			
 			
 			dragRectangle = borders;
@@ -213,19 +212,20 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 			//trace('out!');
 			disable();
 			var ev:Event;
-			var tween:TweenMax
+			var tween:TweenMax;
+			var tween2:TweenMax;
 			if (horizontal)
 			{
 				if (dir == 1)
 				{
 					tween = new TweenMax( obj, 0.5, { x: dragRectangle.x + dragRectangle.width , alpha:0 } );
-					ev = new Event(UPPER_LIMIT_EXCEEDED);
+					ev = new Event(GPBevents.ON_NEXT);
 				}
 				else
 				{
 					//trace('lower limit');
-					tween = new TweenMax( obj, 0.5, { x: dragRectangle.x, alpha:0 } );
-					ev = new Event(LOWER_LIMIT_EXCEEDED);
+					tween2 = new TweenMax( obj, 0.5, { x: dragRectangle.x, alpha:0 } );
+					ev = new Event(GPBevents.ON_PREV);
 				}
 			}
 			else
@@ -233,28 +233,36 @@ package PS.PSmodel.DelegatedBehaviors.Behaviors
 				if (dir == 1)
 				{
 					tween = new TweenMax( obj, 0.5, { y: dragRectangle.height, alpha:0 } );
-					ev = new Event(UPPER_LIMIT_EXCEEDED);
+					ev = new Event(GPBevents.ON_NEXT);
 				}
 				else
 				{
-					tween = new TweenMax( obj, 0.5, { y: 0, alpha:0} );
-					ev = new Event(LOWER_LIMIT_EXCEEDED);
+					tween2 = new TweenMax( obj, 0.5, { y: 0, alpha:0} );
+					ev = new Event(GPBevents.ON_PREV);
 				}
 			}
 			dispatchEvent(ev);
 			
-			tween.addEventListener(TweenEvent.COMPLETE, tweenComplete);
+			if(tween) tween.addEventListener(TweenEvent.COMPLETE, tweenComplete);
+			if(tween2) tween2.addEventListener(TweenEvent.COMPLETE, tween2Complete);
 		}
 		
 		private function tweenComplete(e:Event):void 
 		{
 			//obj.tweenComplete();
-			dispatchEvent(new Event(TWEENOUT_ENDED));
+			dispatchEvent(new Event(GPBevents.ON_NEXT_COMPLETE));
+			dispatchEvent(new Event(GPBevents.ON_OUT));
+		}
+		private function tween2Complete(e:Event):void 
+		{
+			//obj.tweenComplete();
+			dispatchEvent(new Event(GPBevents.ON_PREV_COMPLETE));
+			dispatchEvent(new Event(GPBevents.ON_OUT));
 		}
 		
-		public function disable():void
+		override public function disable():void
 		{
-			
+			super.disable();
 			//Controller.removePressListener(obj, grab); 
 			enabled = false;
 			//trace('disable')
