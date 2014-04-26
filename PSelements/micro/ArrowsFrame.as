@@ -31,7 +31,7 @@ package PS.PSelements.micro
 		private	var _arrowLeft:SwitchButton;
 		private var _arrowUp:SwitchButton;
 		private	var _arrowDown:SwitchButton;
-		
+		private var _lastDirection:String;
 		private function addArrows(arrowTexture:DisplayObject, offset:int=0,horizontal:Boolean = true ):void
 		{
 			var bmData:BitmapData;
@@ -83,21 +83,29 @@ package PS.PSelements.micro
 		
 		private function onDown():void 
 		{
+			_lastDirection = 'down';
 			dispatchEvent(new Event(ARROW_DOWN));
+			dispatchEvent(new Event(ON_CLICK));
 		}
 		
 		private function onUp():void 
 		{
+			_lastDirection = 'up';
 			dispatchEvent(new Event(ARROW_UP));
+			dispatchEvent(new Event(ON_CLICK));
 		}
 		
 		private function onLeft():void 
 		{
+			_lastDirection = 'left';
 			dispatchEvent(new Event(ARROW_LEFT));
+			dispatchEvent(new Event(ON_CLICK));
 		}
 		private function onRight():void 
 		{
+			_lastDirection = 'right';
 			dispatchEvent(new Event(ARROW_RIGHT));
+			dispatchEvent(new Event(ON_CLICK));
 		}
 		
 		public function get arrowRight():Boolean 
@@ -149,6 +157,11 @@ package PS.PSelements.micro
 		public function set rightArrowAlpha(val:Number):void
 		{
 			_arrowRight.alpha = val;
+		}
+		
+		public function get lastDirection():String 
+		{
+			return _lastDirection;
 		}
 		
 	}

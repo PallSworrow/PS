@@ -19,7 +19,6 @@ package PS.PSelements.popups.galleryTyped.gpb
 	import PS.PScontroller.SwipeController;
 	import PS.PSelements.popups.galleryTyped.GPIbehavior;
 	import PS.PSelements.popups.galleryTyped.GPBevents;
-	import PS.PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
 	
 	/**
 	 * ...

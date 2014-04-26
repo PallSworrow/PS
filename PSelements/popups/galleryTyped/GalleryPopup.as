@@ -5,9 +5,9 @@ package PS.PSelements.popups.galleryTyped
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.geom.Rectangle;
+	import PS.PSelements.micro.ArrowsFrame;
 	import PS.PSelements.popups.galleryTyped.gpb.CarruselItemBehavior;
 	import PS.PSmodel.popupSystem.Popup;
-	import PS.PSmodel.DelegatedBehaviors.Interfaces.IcarruselItem;
 	import PS.PSmodel.Globals;
 	
 	/**
@@ -19,7 +19,7 @@ package PS.PSelements.popups.galleryTyped
 		private var arr:Array;
 		private var index:int;
 		protected var GPI:GalleryPopupItem;
-		private var box:Sprite;
+		protected var box:Sprite;
 		/*
 		funcs:
 			caruselbehavior control
@@ -29,13 +29,23 @@ package PS.PSelements.popups.galleryTyped
 		*/
 		protected var X0:int;
 		protected var Y0:int;
+		protected var arrows:ArrowsFrame;
 		public function GalleryPopup(list:Array, Index:int) 
 		{
+			//-------------------CHANGABLE--------------
+			X0 = -Globals.stageWidth / 2;
+			Y0 = -572;
+			//=========================================
+			
+			
 			arr = list
 			index = Index;
 			box = new Sprite();
+			
 			super(box, { } );
 			addItem('center');
+			arrows = addArrows();
+			initArrows();
 			
 		}
 		
@@ -55,17 +65,20 @@ package PS.PSelements.popups.galleryTyped
 		{
 			return null;
 		}
-		protected function setBehavior(canLeft:Boolean, canRight:Boolean):GPIbehavior//MUST OVERRIED
+		
+		
+		
+		
+	//DRAG BEHAVIOR:
+		protected function setBehavior():GPIbehavior//MUST OVERRIED
 		{
 			//HARD-CODE!
 			return new CarruselItemBehavior(GPI , new Rectangle(0, GPI.y, Globals.stageWidth, 0), 400, true, { banUp: !canRight, banDown: !canLeft } );
 		}
+		
+		
 		private function addItem(position:String):void//position: left/center/right
 		{
-			//-------------------CHANGABLE--------------
-			X0 = -Globals.stageWidth / 2;
-			Y0 = -572;
-			//=========================================
 			
 			GPI = createItem();
 			GPI.createContent(arr[index]);
@@ -87,17 +100,15 @@ package PS.PSelements.popups.galleryTyped
 					GPI.x = Globals.stageWidth;
 					break;
 			}
-			var canLeft:Boolean = true;
-			var canRight:Boolean = true;
-			if (index <= 0) canLeft = false;
-			if (index >= arr.length - 1) canRight = false;
-			GPI.initBehavior(setBehavior(canLeft, canRight));
+			
+			GPI.initBehavior(setBehavior());
 			
 			
 			GPI.addEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
 			GPI.addEventListener(GPBevents.ON_NEXT,onItemTweenedRight);
 			box.addChild(GPI);
 		}
+		
 		private function onItemTweenedRight(e:Event):void
 		{
 			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
@@ -112,9 +123,48 @@ package PS.PSelements.popups.galleryTyped
 			index++;
 			addItem('right');
 		}
-		
-		
-		
+		//Gettets:----------------------
+		protected function get canLeft():Boolean
+		{
+			
+			if (index <= 0) return false;
+			else return true;
+		}
+		protected function get canRight():Boolean
+		{
+			if (index >= arr.length - 1) return false;
+			else return true;
+		}
+	//=======================================================================
+		protected function addArrows():ArrowsFrame
+		{
+			return null;
+		}
+		private function initArrows():void
+		{
+			if (arrows) {
+				
+				arrows.addEventListener(ArrowsFrame.ON_CLICK, onArrow);
+				checArrows();
+				box.addChild(arrows); 
+			}
+		}
+		private function checArrows():void
+		{
+			trace('check arrows');
+			trace(canLeft);
+			trace(canRight);
+			arrows.arrowLeft = canLeft;
+			arrows.arrowRight = canRight;
+		}
+		private function onArrow(e:Event):void 
+		{
+			trace('onArrow');
+			if (arrows.lastDirection == 'left' || arrows.lastDirection == 'down') index--;
+			else index ++ ;
+			GPI.createContent(arr[index]);
+			checArrows();
+		}
 	}
 
 }
