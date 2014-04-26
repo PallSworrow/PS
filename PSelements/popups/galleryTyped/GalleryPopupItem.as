@@ -29,10 +29,14 @@ package PS.PSelements.popups.galleryTyped
 		*/
 		 
 		private var props:Object;
-		public function GalleryPopupItem(data:Object) 
+		protected var X0:int;
+		protected var Y0:int;
+		public function GalleryPopupItem(data:Object,x0:int=0,y0:int=0) 
 		{
 			super(); 
 			props = data;
+			X0 = x0;
+			Y0 = y0;
 			trace('new ' + this);
 			
 			createContent(props);
