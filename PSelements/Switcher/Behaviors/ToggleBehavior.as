@@ -68,7 +68,6 @@ package PS.PSelements.Switcher.Behaviors
 		
 		public function unselect():void	
 		{
-			trace('unselect');
 			if (flag_only_one_can_be_turnOn)
 			{
 				first.visible = true;

@@ -241,7 +241,6 @@ package PS.PSelements
 				}
 				else
 				{
-					//trace('tweenMax');
 					TweenMax.to(sb, tweeningTime, { persent:pos } );
 				}
 			}
@@ -265,7 +264,6 @@ package PS.PSelements
 					if (horizontal) sb.init(W / size);
 					else sb.init(H / size);
 					
-					//trace(needScroll);
 					if (needScroll)	showScrollBar();
 					else hideScrollBar();
 				}

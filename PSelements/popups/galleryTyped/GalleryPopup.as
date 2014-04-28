@@ -147,15 +147,11 @@ package PS.PSelements.popups.galleryTyped
 		}
 		private function checArrows():void
 		{
-			trace('check arrows');
-			trace(canLeft);
-			trace(canRight);
 			arrows.arrowLeft = canLeft;
 			arrows.arrowRight = canRight;
 		}
 		private function onArrow(e:Event):void 
 		{
-			trace('onArrow');
 			if (arrows.lastDirection == 'left' || arrows.lastDirection == 'down') index--;
 			else index ++ ;
 			GPI.createContent(arr[index]);

@@ -16,7 +16,7 @@ package PS.PSelements.micro
 	{
 		protected var endImg0:DisplayObject;
 		protected var endImg1:DisplayObject;
-		protected var centerImg:Bitmap;
+		protected var centerImg:DisplayObject;
 		protected var _minLength:Number;
 		protected var endHeight:Number;
 		
@@ -50,6 +50,7 @@ package PS.PSelements.micro
 			
 			centerImg = new Bitmap(bmData2);
 			
+		
 			addChild(centerImg);
 			
 			centerImg.y = endImg0.height;
@@ -67,12 +68,12 @@ package PS.PSelements.micro
 			
 			setSize(0);
 			//test();
-			//addEventListener(Event.ENTER_FRAME, enterFrame);
+		//	addEventListener(Event.ENTER_FRAME, enterFrame);
 		}
 		
 		private function enterFrame(e:Event):void 
 		{
-			//trace(endImg1.x);
+		//	trace(width);
 		}
 		
 		public function setSize(l:int):void
@@ -108,8 +109,24 @@ package PS.PSelements.micro
 			trace('Test');
 			trace('x=' + centerImg.width);
 		}*/
+		override public function get x():Number 
+		{
+			return super.x;
+		}
 		
+		override public function set x(value:Number):void 
+		{
+			super.x = int(value);
+		}
+		override public function get y():Number 
+		{
+			return super.y;
+		}
 		
+		override public function set y(value:Number):void 
+		{
+			super.y = int(value);
+		}
 	}
 
 }

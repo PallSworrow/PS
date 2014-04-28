@@ -41,7 +41,7 @@ package PS.PSelements.popups.galleryTyped
 			
 		}
 		private var behavior:GPIbehavior;
-		public function initBehavior(behav:GPIbehavior )
+		public function initBehavior(behav:GPIbehavior ):void
 		{
 			if (behavior) return;//error double init;
 			behavior = behav;
@@ -70,7 +70,6 @@ package PS.PSelements.popups.galleryTyped
 		
 		public function createContent(data:Object):void
 		{
-			trace('??');
 		}
 		
 	}

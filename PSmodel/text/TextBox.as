@@ -38,6 +38,7 @@ package PS.PSmodel.text
 			if (param.underlined) undr = param.underlined;
 			if (param.align) align = param.align;
 			if (param.autoSize) Asize = param.autoSize;
+			if (param.filter) this.filters = [param.filter];
 			if (param.singleLine) 
 			{
 				wordWrap = false;

@@ -49,8 +49,11 @@ package PS.PSelements.video
 		
 		///FLAGS and SWITCHERS:
 		private var soundBtnFunction:String = 'switchSound';// showVolumeBar, switchSound.    should add a setter.
-		
+
 		private var gotoController:TapController;
+		private var _enable:Boolean = false;
+		
+		
 		public function VPControls(playButton:SwitchButton,progressLine:LoadingBar,soundButton:SwitchButton,volumeControll:ScrollBar=null, bgTexture:DisplayObject=null) 
 		{
 			_playBtn = playButton;
@@ -77,7 +80,7 @@ package PS.PSelements.video
 			Engine.instance.addEventListener(Event.ENTER_FRAME, update);
 			
 			gotoController = Controller.addTapListener(_progressBar);
-			gotoController.addEventListener(TapController.ON_TAP, goto)
+			
 			
 			if (volumeControll)
 			{
@@ -94,9 +97,15 @@ package PS.PSelements.video
 		public function init(vPlayer:IVideoPlayer):void
 		{
 			player = vPlayer;
+			player.addEventListener(player.EVENT_ON_CLEAR, player_eventOnClear);
 		/*	if (isPlaying) player.play();
 			else player.stop()*/
 			
+		}
+		
+		private function player_eventOnClear(e:Event):void 
+		{
+			progress = 0;
 		}
 		public function forcePlay():void
 		{
@@ -118,9 +127,9 @@ package PS.PSelements.video
 		//EventHandlers:-------------------------
 		private function playSwitch(e:Object):void
 		{
+			
 			if (isPlaying == false)
 			{
-				
 				isPlaying = true;
 				dispatchEvent(new Event(PLAY));
 				
@@ -278,6 +287,7 @@ package PS.PSelements.video
 	
 		public function set progress(value:Number):void 
 		{
+			
 			if (value > 1) value = 1;
 			if (value < 0) value = 0;
 			_progress = value;
@@ -297,7 +307,6 @@ package PS.PSelements.video
 		}
 		public function set isPlaying(value:Boolean):void 
 		{
-			trace('set is playing to: ' + value);
 			_isPlaying = value;
 			
 			
@@ -338,6 +347,26 @@ package PS.PSelements.video
 		
 		override public function set height(value:Number):void 
 		{
+			
+		}
+		
+		public function get enable():Boolean 
+		{
+			
+			return _enable;
+			
+		}
+		
+		public function set enable(value:Boolean):void 
+		{
+			if (_enable != value)
+			{
+				_enable = value;
+				if (value) gotoController.addEventListener(TapController.ON_TAP, goto);
+				else gotoController.removeEventListener(TapController.ON_TAP, goto)
+				
+				
+			}
 			
 		}
 		

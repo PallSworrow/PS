@@ -61,7 +61,6 @@ package PS.PSelements.micro
 		
 		public function ScrollBar(Length:int, indicatorTex:DisplayObject, bgTex:DisplayObject, indicatorOffset:int = 0, fillTex:DisplayObject = null):void
 		{
-			trace('new ' + this);
 			length = Length;
 			indOffset = indicatorOffset;
 			
@@ -84,7 +83,7 @@ package PS.PSelements.micro
 				(indicator as Sprite).addChild(indicatorTex);
 				
 			}
-			indicator.x = Math.round(-indicator.width / 2);
+			indicator.x = -indicator.width / 2;
 				indicator.y = indOffset;
 			init(0.3);
 			
@@ -140,7 +139,6 @@ package PS.PSelements.micro
 		public function set enabled(value:Boolean):void 
 		{
 			if (_enabled == value) return;
-			trace('X='+indicator.x);
 			if (value)
 			{
 				maxOffset =  bg.height - 2 * indOffset - indicator.height;
@@ -170,21 +168,17 @@ package PS.PSelements.micro
 		}
 		private function onTap(e:Event):void 
 		{
-		trace(stepControll.targetName);
-		trace(stepControll.localY);
 			if (stepControll.targetName == 'trigger')
 			{
 				
 				if (stepControll.localY > indicator.y-indOffset) 
 				{
-					//trace('up')
 					persent = persent + 0.2;
 					dispatchEvent(new Event(ON_STEP));
 					dispatchEvent(new Event(ON_CHANGE));
 				}
 				else if (stepControll.localY < indicator.y-indOffset) {
 					
-					//trace('down');
 					persent = persent - 0.2;
 					dispatchEvent(new Event(ON_STEP));
 					dispatchEvent(new Event(ON_CHANGE));

@@ -37,7 +37,7 @@ package PS.PSelements.micro
 			
 			centerOffset = !fromCorner;
 			var bmData:BitmapData;
-			bmData = new BitmapData(cornerTextrure.width, cornerTextrure.height);
+			bmData = new BitmapData(cornerTextrure.width, cornerTextrure.height,true,0);
 			bmData.draw(cornerTextrure);
 			
 			cornerLU = new Bitmap(bmData);
@@ -57,7 +57,7 @@ package PS.PSelements.micro
 			
 			
 			
-			bmData = new BitmapData(borderTextrure.width, borderTextrure.height);
+			bmData = new BitmapData(borderTextrure.width, borderTextrure.height,true,0);
 			bmData.draw(borderTextrure);
 			
 			borderU = new Bitmap(bmData);
@@ -70,7 +70,7 @@ package PS.PSelements.micro
 			addChild(borderD);
 			
 			
-			bmData = new BitmapData(centerTextrure.width, centerTextrure.height);
+			bmData = new BitmapData(centerTextrure.width, centerTextrure.height,true,0);
 			bmData.draw(centerTextrure);
 			center = new Bitmap(bmData);
 			addChild(center);
@@ -88,8 +88,8 @@ package PS.PSelements.micro
 			if (h < minSideLength) h = minSideLength;
 			if (centerOffset)
 			{
-				centerOffsetX = -w / 2;
-				centerOffsetY = -h / 2;
+				centerOffsetX = int(-w / 2);
+				centerOffsetY = int(-h / 2);
 			}
 			else
 			{
@@ -100,38 +100,38 @@ package PS.PSelements.micro
 			
 			
 			
-			cornerLU.y = centerOffsetY;
-			cornerLU.x = centerOffsetX;
+			cornerLU.y = int(centerOffsetY);
+			cornerLU.x = int(centerOffsetX);
 			
-			cornerRU.y = centerOffsetY;
-			cornerRU.x = w +centerOffsetX;
+			cornerRU.y = int(centerOffsetY);
+			cornerRU.x = int(w +centerOffsetX);
 			
-			cornerLD.y = h + centerOffsetY;
-			cornerLD.x = centerOffsetX;
+			cornerLD.y = int(h + centerOffsetY);
+			cornerLD.x = int(centerOffsetX);
 			
-			cornerRD.x = w+centerOffsetX;
-			cornerRD.y = h+centerOffsetY;
+			cornerRD.x = int(w+centerOffsetX);
+			cornerRD.y = int(h+centerOffsetY);
 			
 			borderR.rotation = 0;
 			borderU.rotation = 0;
 			borderL.rotation = 0;
 			borderD.rotation = 0;
 			
-			borderU.x = cornerSize+centerOffsetX;
-			borderU.y = centerOffsetY;
-			borderU.width = w - 2 * cornerSize;
+			borderU.x = int(cornerSize+centerOffsetX);
+			borderU.y = int(centerOffsetY);
+			borderU.width = int(w - 2 * cornerSize);
 						
-			borderL.x = centerOffsetX;
-			borderL.y = h - cornerSize+centerOffsetY;
-			borderL.width = h - 2 * cornerSize;
+			borderL.x = int(centerOffsetX);
+			borderL.y =int( h - cornerSize+centerOffsetY);
+			borderL.width = int(h - 2 * cornerSize);
 			
-			borderD.x = w-cornerSize+centerOffsetX;
-			borderD.y = h + centerOffsetY;
-			borderD.width = w - 2 * cornerSize;
+			borderD.x = int(w-cornerSize+centerOffsetX);
+			borderD.y =int( h + centerOffsetY);
+			borderD.width = int(w - 2 * cornerSize);
 			
-			borderR.x = w + centerOffsetX;
-			borderR.y = cornerSize +centerOffsetY;
-			borderR.width = h - 2 * cornerSize;
+			borderR.x =int( w + centerOffsetX);
+			borderR.y = int(cornerSize +centerOffsetY);
+			borderR.width = int(h - 2 * cornerSize);
 			
 			
 			
@@ -140,10 +140,10 @@ package PS.PSelements.micro
 			borderL.rotation = -90;
 			borderD.rotation = 180;
 			
-			center.x = cornerSize+centerOffsetX;
-			center.y = cornerSize+centerOffsetY;
-			center.width = w - 2 * cornerSize;
-			center.height = h - 2 * cornerSize;
+			center.x = int(cornerSize+centerOffsetX);
+			center.y = int(cornerSize+centerOffsetY);
+			center.width = int(w - 2 * cornerSize);
+			center.height = int(h - 2 * cornerSize);
 			
 			
 		}

@@ -94,11 +94,11 @@ package PS.PSelements.video
 		private function vl_eventOnClear(e:Event):void 
 		{
 			dispatchEvent(new Event(ONCLEAR));
+			vc.enable = false;
 		}
 		
 		private function vc_play(e:Event):void 
 		{
-			trace('VC - play. fog:'+isFogged);
 			if (isFogged)
 			{
 				
@@ -109,10 +109,8 @@ package PS.PSelements.video
 		
 		private function vc_pause(e:Event):void 
 		{
-			trace('VC - stop fog:'+isFogged);
 			if (!isFogged)
 			{
-				trace('SELECT!');
 				fog.select(false);
 			}
 			isFogged = true;
@@ -120,7 +118,6 @@ package PS.PSelements.video
 		
 		private function onVideoTap():void 
 		{
-			trace('tap video');
 			if (vl.isPlaying == false)
 			{
 				isFogged = false;
@@ -137,7 +134,7 @@ package PS.PSelements.video
 		{
 			
 			vc.width = vl.width;
-			trace(vl.width);
+			vc.enable = true;
 			//vc.x = (vl.width - vc.width) / 2;
 			
 			fog.visible = true;

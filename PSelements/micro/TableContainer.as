@@ -34,8 +34,6 @@ package PS.PSelements.micro
 		
 		override public function addChild(child:DisplayObject):DisplayObject 
 		{
-			trace('itemWidth = ' + itemWidth)
-			trace('itvX = ' + _itvX)
 			if (!_itemWidth)
 			{
 				_itemWidth = child.width;

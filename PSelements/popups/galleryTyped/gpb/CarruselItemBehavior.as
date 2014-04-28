@@ -38,6 +38,7 @@ package PS.PSelements.popups.galleryTyped.gpb
 		protected var startPos:int;
 		//flags:
 		public var enabled:Boolean = false;
+		private var dragable:Boolean = true;
 		
 		//properties:
 		protected var props:Object;
@@ -92,22 +93,24 @@ package PS.PSelements.popups.galleryTyped.gpb
 		{
 			if (props.banUp) 
 			{
-				trace('ban up' );
 				swipeUpAllowed = false;
 			}
 			if (props.banDown)
 			{
-				trace('ban down');
 				swipeDownAllowed = false;
 				
+			}
+			if (props.banDrag)
+			{
+				dragable != props.banDrag;
 			}
 		}
 		protected function init(e:Event = null):void
 		{
-			//trace('init behavior');
 			controlListener = Controller.addDragListener(obj, dragRectangle); 
 			controlListener.addEventListener(DragController.ON_START_DRAG, grab);
 			controlListener.addEventListener(DragController.ON_STOP_DRAG, drop);
+		
 
 			enabled = true;
 		}
@@ -123,7 +126,6 @@ package PS.PSelements.popups.galleryTyped.gpb
 		protected var swipeTimer:Timer;
 		public function grab(e:Event):void
 		{
-			//trace('start drag');
 			startDragX = controlListener.stageX;
 			startDragY = controlListener.stageY;
 			swipeTimer = new Timer(200, 1);
@@ -140,8 +142,6 @@ package PS.PSelements.popups.galleryTyped.gpb
 		}
 		public function drop(e:Event):void 
 		{
-			//trace('drop');
-			//trace(Math.abs(startDragX - controlListener.stageX));
 			
 			
 			if (enabled == true ) 
