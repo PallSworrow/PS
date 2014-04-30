@@ -29,9 +29,13 @@ package PS.PSelements.popups.galleryTyped
 		*/
 		protected var X0:int;
 		protected var Y0:int;
+		protected var CenterX:int;
+		protected var CenterY:int;
 		protected var arrows:ArrowsFrame;
 		public function GalleryPopup(list:Array, Index:int) 
 		{
+			CenterX = Globals.stageWidth/2;
+			items = new Array();
 			//-------------------CHANGABLE--------------
 			X0 = -Globals.stageWidth / 2;
 			Y0 = -572;
@@ -43,8 +47,9 @@ package PS.PSelements.popups.galleryTyped
 			box = new Sprite();
 			
 			super(box, { } );
-			addItem('center');
 			arrows = addArrows();
+			step(0);
+			
 			initArrows();
 			
 		}
@@ -52,8 +57,8 @@ package PS.PSelements.popups.galleryTyped
 		
 		override public function close():void 
 		{
-			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
-			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
+			GPI.removeEventListener(GPIevent.ON_BACK,scrollForward);
+			GPI.removeEventListener(GPIevent.ON_FORWARD, scrollBack);
 			GPI = null;
 			super.close();
 		}
@@ -66,58 +71,70 @@ package PS.PSelements.popups.galleryTyped
 		
 		
 	//DRAG BEHAVIOR:
-		protected function setBehavior():GPIbehavior//MUST OVERRIED
+		protected function setBehavior():IGalleryItemBehavior//MUST OVERRIDE
 		{
-			//HARD-CODE!
-			return new CarruselItemBehavior(GPI , new Rectangle(0, GPI.y, Globals.stageWidth, 0), 400, true, { banUp: !canRight, banDown: !canLeft } );
+			return null;
 		}
 		
+		private var items:Array;///pull
 		
-		private function addItem(position:String):void//position: left/center/right
+		//BAD CODE HERE: !!!
+		private function step(from:int):void//position: -1/0/1
 		{
-			
-			GPI = createItem();
-			GPI.createContent(arr[index]);
-			
-			//-------------------CHANGABLE--------------
-			GPI.y = 572;
-			
-			//=========================================
-			
-			switch(position)
+			//save current:
+			if (GPI) //if this is not fist creation
 			{
-				case 'left':
-					GPI.x = 0;
-					break;
-				case 'center':
-					GPI.x = Globals.stageWidth/2;
-					break;
-				case 'right':
-					GPI.x = Globals.stageWidth;
-					break;
+				items[index] = GPI;
+				GPI.control = false;
+				//disable behavior?
+				GPI.removeEventListener(GPIevent.ON_BACK,scrollForward);
+				GPI.removeEventListener(GPIevent.ON_FORWARD,scrollBack);
 			}
 			
-			GPI.initBehavior(setBehavior());
 			
 			
-			GPI.addEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
-			GPI.addEventListener(GPBevents.ON_NEXT,onItemTweenedRight);
+			// search new in pull:
+			index += from;
+			if (items[index]) //exists
+			{
+				GPI = items[index]
+			}
+			else // should create a new one
+			{
+				
+				
+				GPI = createItem();
+				
+				
+			}
+		/*	trace('STEP');
+			trace('left: ' + canLeft);
+			trace('right: ' + canRight);*/
+			GPI.control = true;
+			GPI.initBehavior(setBehavior(),from,canRight,canLeft);
+			GPI.addEventListener(GPIevent.ON_BACK,scrollForward);
+			GPI.addEventListener(GPIevent.ON_FORWARD,scrollBack);
+			GPI.createContent(arr[index]);
+			
+			
+			
 			box.addChild(GPI);
+			checArrows();
 		}
 		
-		private function onItemTweenedRight(e:Event):void
+		
+		//======================================================
+		private function scrollBack(e:Event):void
 		{
-			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
-			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
-			index--;
-			addItem('left');
+			GPI.removeEventListener(GPIevent.ON_BACK,scrollForward);
+			GPI.removeEventListener(GPIevent.ON_FORWARD, scrollBack);
+			step(-1);
 		}
-		private function onItemTweenedLeft(e:Event):void
+		private function scrollForward(e:Event):void
 		{
-			GPI.removeEventListener(GPBevents.ON_PREV,onItemTweenedLeft);
-			GPI.removeEventListener(GPBevents.ON_NEXT, onItemTweenedRight);
-			index++;
-			addItem('right');
+			GPI.removeEventListener(GPIevent.ON_BACK,scrollForward);
+			GPI.removeEventListener(GPIevent.ON_FORWARD, scrollBack);
+			step(1);
 		}
 		//Gettets:----------------------
 		protected function get canLeft():Boolean
@@ -132,6 +149,8 @@ package PS.PSelements.popups.galleryTyped
 			else return true;
 		}
 	//=======================================================================
+	
+	///BAD CODE:
 		protected function addArrows():ArrowsFrame
 		{
 			return null;
@@ -154,6 +173,7 @@ package PS.PSelements.popups.galleryTyped
 		{
 			if (arrows.lastDirection == 'left' || arrows.lastDirection == 'down') index--;
 			else index ++ ;
+			step(0);
 			GPI.createContent(arr[index]);
 			checArrows();
 		}

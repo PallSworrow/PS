@@ -20,7 +20,7 @@ package PS.PScontroller
 		public static const ON_TAP:String = 'ontap';
 		
 		//=============================================
-		private static const tapAccurancy:int = 15;
+		private static const tapAccurancy:int = 10;
 		
 		
 		
@@ -64,7 +64,7 @@ package PS.PScontroller
 		{
 			if (canI('TE') == false) return;
 			
-			
+			trace(item+' TE ');
 			tapFlag  = true;
 			_stageX = e.stageX;
 			_stageY = e.stageY;
@@ -98,7 +98,7 @@ package PS.PScontroller
 		protected function TE_onRelease(e:TouchEvent):void
 		{
 			Globals.mainClip.removeEventListener(TouchEvent.TOUCH_MOVE, TE_move);
-			
+			trace(item+' TE-end');
 			_stageX = e.stageX;
 			_stageY = e.stageY;
 			_target = e.target;
@@ -121,7 +121,7 @@ package PS.PScontroller
 		{
 			
 			if (canI('ME') == false) return;
-			
+			trace(item+' ME');
 			_stageX = e.stageX;
 			_stageY = e.stageY;
 			_localX = e.localX;
@@ -149,6 +149,7 @@ package PS.PScontroller
 		}
 		private function ME_onRelease(e:MouseEvent):void 
 		{
+			trace(item+' ME-end');
 			Globals.mainClip.removeEventListener(MouseEvent.MOUSE_UP, ME_onRelease);
 			Globals.mainClip.removeEventListener(MouseEvent.MOUSE_MOVE, ME_move);
 			

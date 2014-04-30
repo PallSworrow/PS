@@ -18,7 +18,7 @@ package PS.PSelements.popups.galleryTyped.gpb
 	import PS.PScontroller.DragController;
 	import PS.PScontroller.SwipeController;
 	import PS.PSelements.popups.galleryTyped.GPIbehavior;
-	import PS.PSelements.popups.galleryTyped.GPBevents;
+	import PS.PSelements.popups.galleryTyped.GPIevent;
 	
 	/**
 	 * ...
@@ -218,13 +218,13 @@ package PS.PSelements.popups.galleryTyped.gpb
 				if (dir == 1)
 				{
 					tween = new TweenMax( obj, 0.5, { x: dragRectangle.x + dragRectangle.width , alpha:0 } );
-					ev = new Event(GPBevents.ON_NEXT);
+					ev = new Event(GPIevents.ON_NEXT);
 				}
 				else
 				{
 					//trace('lower limit');
 					tween2 = new TweenMax( obj, 0.5, { x: dragRectangle.x, alpha:0 } );
-					ev = new Event(GPBevents.ON_PREV);
+					ev = new Event(GPIevents.ON_PREV);
 				}
 			}
 			else
@@ -232,12 +232,12 @@ package PS.PSelements.popups.galleryTyped.gpb
 				if (dir == 1)
 				{
 					tween = new TweenMax( obj, 0.5, { y: dragRectangle.height, alpha:0 } );
-					ev = new Event(GPBevents.ON_NEXT);
+					ev = new Event(GPIevents.ON_NEXT);
 				}
 				else
 				{
 					tween2 = new TweenMax( obj, 0.5, { y: 0, alpha:0} );
-					ev = new Event(GPBevents.ON_PREV);
+					ev = new Event(GPIevents.ON_PREV);
 				}
 			}
 			dispatchEvent(ev);
@@ -249,14 +249,14 @@ package PS.PSelements.popups.galleryTyped.gpb
 		private function tweenComplete(e:Event):void 
 		{
 			//obj.tweenComplete();
-			dispatchEvent(new Event(GPBevents.ON_NEXT_COMPLETE));
-			dispatchEvent(new Event(GPBevents.ON_OUT));
+			dispatchEvent(new Event(GPIevents.ON_NEXT_COMPLETE));
+			dispatchEvent(new Event(GPIevents.ON_OUT));
 		}
 		private function tween2Complete(e:Event):void 
 		{
 			//obj.tweenComplete();
-			dispatchEvent(new Event(GPBevents.ON_PREV_COMPLETE));
-			dispatchEvent(new Event(GPBevents.ON_OUT));
+			dispatchEvent(new Event(GPIevents.ON_PREV_COMPLETE));
+			dispatchEvent(new Event(GPIevents.ON_OUT));
 		}
 		
 		override public function disable():void

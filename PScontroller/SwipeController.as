@@ -2,6 +2,9 @@ package PS.PScontroller
 {
 	import flash.display.InteractiveObject;
 	import flash.events.Event;
+	import flash.events.TouchEvent;
+	import flash.utils.setTimeout;
+	import PS.PSmodel.Globals;
 	//import flash.events.GestureEvent;
 	import org.gestouch.core.GestureState;
 	import org.gestouch.events.GestureEvent;
@@ -46,11 +49,50 @@ package PS.PScontroller
 			rightGessture.direction = SwipeGestureDirection.RIGHT;
 			rightGessture.addEventListener(GestureEvent.GESTURE_RECOGNIZED, onSwipeRight);
 			
+			
+			
+			item.addEventListener(TouchEvent.TOUCH_BEGIN, TE_touchBegin);
+			
+			
+		}
+		
+		private var startX:int;
+		private var startY:int;
+		private var gesFailed:Boolean;
+		
+		private static const SwipeTimeRestriction:int = 60;
+		private static const SwipeMinDist:int = 40;
+		private function TE_touchBegin(e:TouchEvent):void 
+		{
+			if (!canI('TE')) return;
+			gesFailed = false;
+			startX = e.stageX;
+			startY = e.stageY;
+			setTimeout(TE_failSwipe, SwipeTimeRestriction);
+			Globals.mainClip.addEventListener(TouchEvent.TOUCH_END, TE_touchEnd);
+		}
+		private function TE_failSwipe():void
+		{
+			gesFailed = true;
+			//trace('SWIPE FAILED');
+			resetListenerType();
+		}
+		private function TE_touchEnd(e:TouchEvent):void 
+		{
+			
+			Globals.mainClip.removeEventListener(TouchEvent.TOUCH_END, TE_touchEnd);
+			if (gesFailed) return;
+			
+			//trace('SWIPE');
+			//trace(e.stageX - startX);
+			if (e.stageX > startX + SwipeMinDist) dispatchEvent(new Event(SWIPE_RIGHT));
+			if (e.stageX < startX - SwipeMinDist) dispatchEvent(new Event(SWIPE_LEFT));
+			resetListenerType();
 		}
 		
 		private function onSwipeRight(e:GestureEvent):void 
 		{
-			trace('swiperight');
+		//	trace('swiperight');
 			if (canI('GT'))
 			{
 				
@@ -62,7 +104,7 @@ package PS.PScontroller
 		
 		private function onSwipeLeft(e:GestureEvent):void 
 		{
-			trace('swipeleft ');
+			//trace('swipeleft ');
 			
 			if (canI('GT'))
 			{
